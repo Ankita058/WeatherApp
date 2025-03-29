@@ -4,17 +4,17 @@ import sunny from '../Images/sunny.png'
 import clear from '../Images/clear.png'
 import mist from '../Images/mist.png'
 import rain from '../Images/rain.png'
-import image from '../Images/image.png'
+
 
 
 function Weather() {
   const APT_KEY='66cb6e9872e194c7b23611bcaf1a170c';
   const my_api='https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}';
 
-  const[search,setSearch]=useState(""); // handling input value
-  const[data,setData]=useState();
+  const[search,setSearch]=useState(""); // taking city name from userinput
+  const[data,setData]=useState(); // taking api data
 
-  const [error,setError]=useState();
+  const [error,setError]=useState(); // handling
 
   const handleinput = (event)=>{
      setSearch(event.target.value);
