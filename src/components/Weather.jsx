@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
 import cloud from '../Images/cloud.png'
-import sunny from '../Images/sunny.png'
+import error from '../Images/error.png'
 import clear from '../Images/clear.png'
 import mist from '../Images/mist.png'
 import rain from '../Images/rain.png'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 
 function Weather() {
   const APT_KEY='66cb6e9872e194c7b23611bcaf1a170c';
   const my_api='https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}';
+  console.log(my_api);
 
   const[search,setSearch]=useState(""); // taking city name from userinput
   const[data,setData]=useState(); // taking api data
@@ -29,11 +34,17 @@ function Weather() {
      console.log(api);
      setData(api);
 
-     
-     if(search == "")
-      {
-       alert('Please put the city name');
+      
+     if (!search.trim()) {
+      toast.warning("Please select a city", { position: "top-center" });
+      return;
+    }
+      if (api.cod !== 200) {
+        toast.error("Invalid city name", { position: "top-center" });
+        return;
       }
+     
+    
   }
 
     // Determine the correct weather image
@@ -57,14 +68,14 @@ function Weather() {
           weatherImage = haze;
           break;
         default:
-          weatherImage = sunny; // Default image
+          weatherImage = error; // Default image
       }
     }
   // getApi();
   return (
     <>
     <div className='main-page'>
-        <h2>Weather Report App</h2>
+        <h3>Weather Report App</h3>
            <div className='weatherin'>
               <input type="text" placeholder='Enter the city name' onChange={handleinput}/>
               <button className='btn' onClick={getApi}>Click me</button> 
@@ -84,11 +95,11 @@ function Weather() {
             }
             </div>
     </div>
-
-
-   </>
-
+    <ToastContainer/>
+    </>
   )
 }
 
+      
+       
 export default Weather
